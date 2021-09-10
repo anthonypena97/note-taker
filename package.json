@@ -1,0 +1,24 @@
+{
+  "name": "note-taker",
+  "version": "1.0.0",
+  "description": "Application for taking and saving notes",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest",
+    "start": "server.js"
+  },
+  "author": "anthonypena97",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "jest": "^27.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anthonypena97/note-taker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/anthonypena97/note-taker/issues"
+  },
+  "homepage": "https://github.com/anthonypena97/note-taker#readme"
+}
