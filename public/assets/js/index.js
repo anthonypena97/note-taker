@@ -92,8 +92,9 @@ const handleNoteSave = () => {
       return response.json();
     })
     .then((data) => {
-      currentNotes = data;
-      renderNewNotes(data);
+      // currentNotes = data;
+      // renderNewNotes(data);
+      getAndRenderNotes();
       renderActiveNote();
     });
 };
@@ -115,8 +116,9 @@ const handleNoteDelete = (e) => {
       return response.json();
     })
     .then((data) => {
-      currentNotes = data;
-      renderNewNotes();
+      // currentNotes = data;
+      getAndRenderNotes();
+      // renderNewNotes();
       renderActiveNote();
     });
 };
@@ -200,57 +202,57 @@ const renderNoteList = async (notes) => {
 };
 
 // Render the list of note titles
-const renderNewNotes = async (notes) => {
-  if (window.location.pathname === "/notes") {
-    noteList.forEach((el) => (el.innerHTML = ""));
-  }
+// const renderNewNotes = async (notes) => {
+//   if (window.location.pathname === "/notes") {
+//     noteList.forEach((el) => (el.innerHTML = ""));
+//   }
 
-  let noteListItems = [];
+//   let noteListItems = [];
 
-  // Returns HTML element with or without a delete button
-  const createLi = (text, delBtn = true) => {
-    const liEl = document.createElement("li");
-    liEl.classList.add("list-group-item");
+//   // Returns HTML element with or without a delete button
+//   const createLi = (text, delBtn = true) => {
+//     const liEl = document.createElement("li");
+//     liEl.classList.add("list-group-item");
 
-    const spanEl = document.createElement("span");
-    spanEl.classList.add("list-item-title");
-    spanEl.innerText = text;
-    spanEl.addEventListener("click", handleNoteView);
+//     const spanEl = document.createElement("span");
+//     spanEl.classList.add("list-item-title");
+//     spanEl.innerText = text;
+//     spanEl.addEventListener("click", handleNoteView);
 
-    liEl.append(spanEl);
+//     liEl.append(spanEl);
 
-    if (delBtn) {
-      const delBtnEl = document.createElement("i");
-      delBtnEl.classList.add(
-        "fas",
-        "fa-trash-alt",
-        "float-right",
-        "text-danger",
-        "delete-note"
-      );
-      delBtnEl.addEventListener("click", handleNoteDelete);
+//     if (delBtn) {
+//       const delBtnEl = document.createElement("i");
+//       delBtnEl.classList.add(
+//         "fas",
+//         "fa-trash-alt",
+//         "float-right",
+//         "text-danger",
+//         "delete-note"
+//       );
+//       delBtnEl.addEventListener("click", handleNoteDelete);
 
-      liEl.append(delBtnEl);
-    }
+//       liEl.append(delBtnEl);
+//     }
 
-    return liEl;
-  };
+//     return liEl;
+//   };
 
-  if (currentNotes.length === 0) {
-    noteListItems.push(createLi("No saved Notes", false));
-  }
+//   if (currentNotes.length === 0) {
+//     noteListItems.push(createLi("No saved Notes", false));
+//   }
 
-  currentNotes.forEach((note) => {
-    const li = createLi(note.title);
-    li.dataset.note = JSON.stringify(note);
+//   currentNotes.forEach((note) => {
+//     const li = createLi(note.title);
+//     li.dataset.note = JSON.stringify(note);
 
-    noteListItems.push(li);
-  });
+//     noteListItems.push(li);
+//   });
 
-  if (window.location.pathname === "/notes") {
-    noteListItems.forEach((note) => noteList[0].append(note));
-  }
-};
+//   if (window.location.pathname === "/notes") {
+//     noteListItems.forEach((note) => noteList[0].append(note));
+//   }
+// };
 
 // Gets notes from the db and renders them to the sidebar
 const getAndRenderNotes = () => getNotes().then(renderNoteList);
