@@ -114,7 +114,7 @@ const handleNoteDelete = (e) => {
       return response.json();
     })
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       // currentNotes = data;
       getAndRenderNotes();
       // renderNewNotes();
@@ -147,7 +147,9 @@ const handleRenderSaveBtn = () => {
 const renderNoteList = async (notes) => {
   let jsonNotes = await notes.json();
 
-  currentNotes = jsonNotes;
+  // console.log(jsonNotes);
+
+  // currentNotes = jsonNotes;
 
   if (window.location.pathname === "/notes") {
     noteList.forEach((el) => (el.innerHTML = ""));

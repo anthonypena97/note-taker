@@ -6,13 +6,12 @@ const {
   updateId,
   getNotes,
 } = require("../../lib/notes");
-const { notes } = require("../../db/db.json");
 const router = require("express").Router();
 
 router.get("/notes", (req, res) => {
   let note = getNotes();
 
-  res.json(notes);
+  res.json(note.notes);
 });
 
 router.post("/notes", (req, res) => {
@@ -22,7 +21,7 @@ router.post("/notes", (req, res) => {
 
   // } else {
 
-  const note = createNewNote(req.body.note, notes);
+  const note = createNewNote(req.body.note);
 
   res.json(note);
 
@@ -32,7 +31,7 @@ router.post("/notes", (req, res) => {
 router.delete("/notes/:id", (req, res) => {
   const params = req.params.id;
 
-  const note = deleteNote(params, notes);
+  const note = deleteNote(params);
 
   console.log(note);
 
