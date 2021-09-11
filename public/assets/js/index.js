@@ -4,6 +4,8 @@ let saveNoteBtn;
 let newNoteBtn;
 let noteList;
 
+let currentNotes = [];
+
 if (window.location.pathname === '/notes') {
   noteTitle = document.querySelector('.note-title');
   noteText = document.querySelector('.note-textarea');
@@ -34,21 +36,28 @@ const getNotes = () =>
   });
 
 const saveNote = (note) =>
+
   fetch('/api/notes', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(note),
-  });
+    body: JSON.stringify({
+      note: note,
+      currentNotes: currentNotes
+    })
+  })
 
-const deleteNote = (id) =>
+const deleteNote = (id) => 
   fetch(`/api/notes/${id}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
     },
-  });
+    body: JSON.stringify({
+      currentNotes: currentNotes
+    })
+  })
 
 const renderActiveNote = () => {
   hide(saveNoteBtn);
@@ -70,12 +79,23 @@ const handleNoteSave = () => {
   const newNote = {
     title: noteTitle.value,
     text: noteText.value,
+    id: ""
   };
-  saveNote(newNote).then(() => {
-    getAndRenderNotes();
-    renderActiveNote();
-  });
+
+  currentNotes.push(newNote);
+
+  // console.log("currentNotes", currentNotes)
+
+  saveNote(newNote).then((response) => {
+    return response.json();
+    }).then((data) => {
+      currentNotes = data;
+      renderNewNotes(data);
+      renderActiveNote();
+    })
+    
 };
+
 
 // Delete the clicked note
 const handleNoteDelete = (e) => {
@@ -84,15 +104,25 @@ const handleNoteDelete = (e) => {
 
   const note = e.target;
   const noteId = JSON.parse(note.parentElement.getAttribute('data-note')).id;
+  console.log(noteId);
+
+  console.log(e.target);
+  
+  // console.log(activeNote.id);
 
   if (activeNote.id === noteId) {
     activeNote = {};
   }
 
-  deleteNote(noteId).then(() => {
-    getAndRenderNotes();
+  deleteNote(noteId).then((response) => {
+    return response.json();
+  }).then(data => {
+    console.log("currentNotes", currentNotes);
+    currentNotes = data;
+    renderNewNotes();
     renderActiveNote();
-  });
+  })
+
 };
 
 // Sets the activeNote and displays it
@@ -118,7 +148,15 @@ const handleRenderSaveBtn = () => {
 
 // Render the list of note titles
 const renderNoteList = async (notes) => {
+  
   let jsonNotes = await notes.json();
+
+  // console.log("jsaonNtes", jsonNotes);
+  
+  currentNotes = jsonNotes;
+
+  // console.log("load notes", currentNotes);
+
   if (window.location.pathname === '/notes') {
     noteList.forEach((el) => (el.innerHTML = ''));
   }
@@ -159,6 +197,63 @@ const renderNoteList = async (notes) => {
   }
 
   jsonNotes.forEach((note) => {
+    const li = createLi(note.title);
+    li.dataset.note = JSON.stringify(note);
+
+    noteListItems.push(li);
+  });
+
+  if (window.location.pathname === '/notes') {
+    noteListItems.forEach((note) => noteList[0].append(note));
+  }
+};
+
+// Render the list of note titles
+const renderNewNotes = async (notes) => {
+
+  // console.log("currentNotes", currentNotes);
+
+  // console.log(jsonNotes);
+  if (window.location.pathname === '/notes') {
+    noteList.forEach((el) => (el.innerHTML = ''));
+  }
+
+  let noteListItems = [];
+
+  // Returns HTML element with or without a delete button
+  const createLi = (text, delBtn = true) => {
+    const liEl = document.createElement('li');
+    liEl.classList.add('list-group-item');
+
+    const spanEl = document.createElement('span');
+    spanEl.classList.add('list-item-title');
+    spanEl.innerText = text;
+    spanEl.addEventListener('click', handleNoteView);
+
+    liEl.append(spanEl);
+
+    if (delBtn) {
+      const delBtnEl = document.createElement('i');
+      delBtnEl.classList.add(
+        'fas',
+        'fa-trash-alt',
+        'float-right',
+        'text-danger',
+        'delete-note'
+      );
+      delBtnEl.addEventListener('click', handleNoteDelete);
+
+      liEl.append(delBtnEl);
+    }
+
+    return liEl;
+  };
+
+  if (currentNotes.length === 0) {
+    noteListItems.push(createLi('No saved Notes', false));
+  }
+
+  currentNotes.forEach((note) => {
     const li = createLi(note.title);
     li.dataset.note = JSON.stringify(note);
 
