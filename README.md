@@ -8,7 +8,7 @@
 
 Application written with Javascript, HTML, and CSS.
 
-[Node.js](https://nodejs.org/en/) and [Express.JS] (https://expressjs.com/) node package are used.
+[Node.js](https://nodejs.org/en/) and [Express.JS](https://expressjs.com/) node package are used.
 
 ## Description
 A User may jot down and organize a to do list, song lyric, or any other note for later reference.
