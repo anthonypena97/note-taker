@@ -4,7 +4,7 @@ let saveNoteBtn;
 let newNoteBtn;
 let noteList;
 
-let currentNotes = [];
+// let currentNotes = [];
 
 let visit;
 
@@ -47,7 +47,6 @@ const saveNote = (note) =>
     },
     body: JSON.stringify({
       note: note,
-      currentNotes: currentNotes,
     }),
   });
 
@@ -85,7 +84,7 @@ const handleNoteSave = () => {
     id: "",
   };
 
-  currentNotes.push(newNote);
+  // currentNotes.push(newNote);
 
   saveNote(newNote)
     .then((response) => {
