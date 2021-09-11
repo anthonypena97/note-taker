@@ -4,11 +4,14 @@ const {
   validateNote,
   deleteNote,
   updateId,
+  getNotes,
 } = require("../../lib/notes");
 const { notes } = require("../../db/db.json");
 const router = require("express").Router();
 
 router.get("/notes", (req, res) => {
+  let note = getNotes();
+
   res.json(notes);
 });
 

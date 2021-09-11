@@ -6,8 +6,6 @@ let noteList;
 
 // let currentNotes = [];
 
-let visit;
-
 // ========================== LOGIC FOR APPLICATION ==========================
 
 if (window.location.pathname === "/notes") {
