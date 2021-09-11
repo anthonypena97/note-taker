@@ -15,11 +15,10 @@ A User may jot down and organize a to do list, song lyric, or any other note for
 
 ## Table of Contents
 * [Installation](#installation)
-* [Usage](#usage)
 * [License](#license)
 * [Contributing](#contributing)
-* [Tests](#tests)
 * [Questions](#questions)
+* [Acknowledgmenets](#Acknowledgments)
 
 ## Installation
 No installation, simply visit https://note-taker-app-anthony.herokuapp.com/
