@@ -116,6 +116,7 @@ const handleNoteDelete = (e) => {
       return response.json();
     })
     .then((data) => {
+      console.log(data);
       // currentNotes = data;
       getAndRenderNotes();
       // renderNewNotes();
