@@ -56,9 +56,10 @@ const deleteNote = (id) =>
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      currentNotes: currentNotes,
-    }),
+    // ,
+    // body: JSON.stringify({
+    //   currentNotes: currentNotes,
+    // }),
   });
 
 const renderActiveNote = () => {
