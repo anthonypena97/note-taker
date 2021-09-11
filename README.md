@@ -52,4 +52,4 @@ For any inquiries or questions, please contact Anthony Pena via:
 ## Acknowledgments
 
 Inspiration, code snippets, etc.
-* [Bootcamp Spot Start Code](https://github.com/coding-boot-camp/miniature-eureka)
+* [Bootcamp Spot Starter Code](https://github.com/coding-boot-camp/miniature-eureka)
